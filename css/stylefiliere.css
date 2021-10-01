@@ -1,0 +1,66 @@
+/*.tfil{
+	margin-bottom: 10px;
+	margin-left: : 10px ;
+}*/
+
+table input {
+    margin-bottom: 10px;
+}
+
+form {
+    border: skyblue solid 8px;
+    width: 99%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: transparent;
+    color: black;
+}
+
+input[type=submit],
+input[type=reset] {
+    font-weight: bold;
+    background-color: dodgerblue;
+    /*4CAF50;*/
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.TabList {
+    width: 99%;
+    margin-top: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    border-collapse: collapse;
+}
+
+.TabList td,
+TabList tr {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.TabList th {
+    background-color: lightgrey;
+    font-weight: bold;
+}
+
+.TabList tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.TabList tr:hover {
+    background-color: #dadada
+}
+
+body {
+    color: black;
+    background-color: white;
+    background: url(../a.jpg) no-repeat;
+    display: inline-block;
+    background-size: 100%;
+}
