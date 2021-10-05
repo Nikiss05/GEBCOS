@@ -1,337 +1,11 @@
-<?php
-include 'connexion.php';
-$customObj = new Controleur();
-
-$erreurSaisie = false;
-$Nom = "";
-$Prenom = "";
-$Pays = "";
-$SecSem1 = "";
-$SecSem2 = "";
-$SecSem3 = "";
-$PreSem1 = "";
-$PreSem2 = "";
-$PreSem3 = "";
-$TleSem1 = "";
-$TleSem2 = "";
-$TleSem3 = "";
-$Attestation = "";
-$RlveNote = "";
-$Passport = "";
-$Email="";
-$Mdp="";
-
-//
-/**
- * 
- */
-if ($_SERVER['REQUEST_METHOD'] == "POST"){
-
-  if (isset($_POST["btnInscrire"])) {
-    if (!isset($_POST["Nom"]) || empty($_POST["Nom"]) ||  !isset($_POST["Prenom"]) || empty($_POST["Prenom"])
-    ||  !isset($_POST["Pays"]) || empty($_POST["Pays"]) ||  !isset($_POST["Email"]) || empty($_POST["Email"])
-    ||  !isset($_POST["Mdp"]) || empty($_POST["Mdp"])) {
-      $erreurSaisie = true;
-      echo "<script>alert('REMPLISSEZ!')</script>";
-
-    } else{
-      $Nom = trim($_POST["Nom"]);
-      $Prenom = trim($_POST["Prenom"]);
-      $Pays = trim($_POST["Pays"]);
-      $Email = trim($_POST["Email"]);
-      $Mdp = trim($_POST["Mdp"]);
-      if ($customObj->existEtudiant($Email)>=1) 
-      {
-        $erreurSaisie = true;
-        echo "<script>alert('Un Etudiant porte déja ce mail!')</script>";
-      }
-      else{
-        $customObj->AjouterDebut($_POST);
-        echo "<script>alert('succes')</script>";
-      }
-    }
-    /*if (isset($_POST["Nom"])) {
-      $Nom = $_POST["Nom"];
-    }
-    if (isset($_POST["Prenom"])) {
-      $Prenom = $_POST["Prenom"];
-    }
-     if (isset($_POST["Pays"])) {
-      $Pays = $_POST["Pays"];
-    }
-    if (isset($_POST["Email"])) {
-      $Email = $_POST["Email"];
-    }
-    if (isset($_POST["Mdp"])) {
-      $Mdp = $_POST["Mdp"];
-    }
-    $customObj->AjouterDebut($_POST);
-        //echo "<script>alert('Enregistrement réussi succes !')</script>"; */
-  }
-}
-     
-    
-       
-       
-     
-     
-
-////////////////
-  /* //secsem1
-    $fichierCharger = $_FILES['SecSem1']['tmp_name'];
-    $sourceProperties = getimagesize($fichierCharger);
-    $nouvNomImg = $_POST["Nom"]."_".$_POST["Prenom"]."_"."SecSem1";
-    // Valid extension
-    $valid_ext = array('pdf', 'png','jpeg','jpg', 'gif');
-    $file_extension = strtolower(pathinfo($_FILES['SecSem1']['name'], PATHINFO_EXTENSION));
-    $nomComplet =  "image/" . htmlentities($nouvNomImg. ".". $file_extension);
-    $imageType = $sourceProperties[2];
-
-    // Check extension
-    if (!in_array($file_extension, $valid_ext)){
-        echo "<script>alert('Format de fichier incorrect !')</script>"; 
-      }else{
-        move_uploaded_file($_FILES['SecSem1']["tmp_name"], "image/" . $nouvNomImg. ".". $file_extension);
-        //unlink("images/lblkb_lnlknmn.jpg");
-        //capermet de supprimer un fichier dans un emplacement précis
-    }
 
 
- //secsem2
 
- $fichierCharger = $_FILES['SecSem2']['tmp_name'];
-    $sourceProperties = getimagesize($fichierCharger);
-    $nouvNomImg = $_POST["Nom"]."_".$_POST["Prenom"]."_"."SecSem2";
-    // Valid extension
-    $valid_ext = array('pdf', 'png','jpeg','jpg', 'gif');
-    $file_extension = strtolower(pathinfo($_FILES['SecSem2']['name'], PATHINFO_EXTENSION));
-    $nomComplet1 =  "image/" . htmlentities($nouvNomImg. ".". $file_extension);
-    $imageType = $sourceProperties[2];
-
-    // Check extension
-    if (!in_array($file_extension, $valid_ext)){
-        echo "<script>alert('Format de fichier incorrect !')</script>"; 
-      }else{
-        move_uploaded_file($_FILES['SecSem2']["tmp_name"], "image/" . $nouvNomImg. ".". $file_extension);
-        //unlink("images/lblkb_lnlknmn.jpg");
-        //capermet de supprimer un fichier dans un emplacement précis
-    }
-
-    //Secsem3
-
-    $fichierCharger = $_FILES['SecSem3']['tmp_name'];
-    $sourceProperties = getimagesize($fichierCharger);
-    $nouvNomImg = $_POST["Nom"]."_".$_POST["Prenom"]."_"."SecSem3";
-    // Valid extension
-    $valid_ext = array('pdf', 'png','jpeg','jpg', 'gif');
-    $file_extension = strtolower(pathinfo($_FILES['SecSem3']['name'], PATHINFO_EXTENSION));
-    $nomComplet2 =  "image/" . htmlentities($nouvNomImg. ".". $file_extension);
-    $imageType = $sourceProperties[2];
-
-    // Check extension
-    if (!in_array($file_extension, $valid_ext)){
-        echo "<script>alert('Format de fichier incorrect !')</script>"; 
-      }else{
-        move_uploaded_file($_FILES['SecSem3']["tmp_name"], "image/" . $nouvNomImg. ".". $file_extension);
-        //unlink("images/lblkb_lnlknmn.jpg");
-        //capermet de supprimer un fichier dans un emplacement précis
-    }
-
-    //Presem1
-
-    $fichierCharger = $_FILES['PreSem1']['tmp_name'];
-    $sourceProperties = getimagesize($fichierCharger);
-    $nouvNomImg = $_POST["Nom"]."_".$_POST["Prenom"]."_"."PreSem1";
-    // Valid extension
-    $valid_ext = array('pdf', 'png','jpeg','jpg', 'gif');
-    $file_extension = strtolower(pathinfo($_FILES['PreSem1']['name'], PATHINFO_EXTENSION));
-    $nomComplet3 =  "image/" . htmlentities($nouvNomImg. ".". $file_extension);
-    $imageType = $sourceProperties[2];
-
-    // Check extension
-    if (!in_array($file_extension, $valid_ext)){
-        echo "<script>alert('Format de fichier incorrect !')</script>"; 
-      }else{
-        move_uploaded_file($_FILES['PreSem1']["tmp_name"], "image/" . $nouvNomImg. ".". $file_extension);
-        //unlink("images/lblkb_lnlknmn.jpg");
-        //capermet de supprimer un fichier dans un emplacement précis
-    }
-
-     //Presem2
-
-     $fichierCharger = $_FILES['PreSem2']['tmp_name'];
-     $sourceProperties = getimagesize($fichierCharger);
-     $nouvNomImg = $_POST["Nom"]."_".$_POST["Prenom"]."_"."PreSem2";
-     // Valid extension
-     $valid_ext = array('pdf', 'png','jpeg','jpg', 'gif');
-     $file_extension = strtolower(pathinfo($_FILES['PreSem2']['name'], PATHINFO_EXTENSION));
-     $nomComplet4 =  "image/" . htmlentities($nouvNomImg. ".". $file_extension);
-     $imageType = $sourceProperties[2];
- 
-     // Check extension
-     if (!in_array($file_extension, $valid_ext)){
-         echo "<script>alert('Format de fichier incorrect !')</script>"; 
-       }else{
-         move_uploaded_file($_FILES['PreSem2']["tmp_name"], "image/" . $nouvNomImg. ".". $file_extension);
-         //unlink("images/lblkb_lnlknmn.jpg");
-         //capermet de supprimer un fichier dans un emplacement précis
-     }
-
-      //Presem3
-
-    $fichierCharger = $_FILES['PreSem3']['tmp_name'];
-    $sourceProperties = getimagesize($fichierCharger);
-    $nouvNomImg = $_POST["Nom"]."_".$_POST["Prenom"]."_"."PreSem3";
-    // Valid extension
-    $valid_ext = array('pdf', 'png','jpeg','jpg', 'gif');
-    $file_extension = strtolower(pathinfo($_FILES['PreSem3']['name'], PATHINFO_EXTENSION));
-    $nomComplet5 =  "image/" . htmlentities($nouvNomImg. ".". $file_extension);
-    $imageType = $sourceProperties[2];
-
-    // Check extension
-    if (!in_array($file_extension, $valid_ext)){
-        echo "<script>alert('Format de fichier incorrect !')</script>"; 
-      }else{
-        move_uploaded_file($_FILES['PreSem3']["tmp_name"], "image/" . $nouvNomImg. ".". $file_extension);
-        //unlink("images/lblkb_lnlknmn.jpg");
-        //capermet de supprimer un fichier dans un emplacement précis
-    }
-
-     //TleSem1
-
-     $fichierCharger = $_FILES['TleSem1']['tmp_name'];
-     $sourceProperties = getimagesize($fichierCharger);
-     $nouvNomImg = $_POST["Nom"]."_".$_POST["Prenom"]."_"."TleSem1";
-     // Valid extension
-     $valid_ext = array('pdf', 'png','jpeg','jpg', 'gif');
-     $file_extension = strtolower(pathinfo($_FILES['TleSem1']['name'], PATHINFO_EXTENSION));
-     $nomComplet6 =  "image/" . htmlentities($nouvNomImg. ".". $file_extension);
-     $imageType = $sourceProperties[2];
- 
-     // Check extension
-     if (!in_array($file_extension, $valid_ext)){
-         echo "<script>alert('Format de fichier incorrect !')</script>"; 
-       }else{
-         move_uploaded_file($_FILES['TleSem1']["tmp_name"], "image/" . $nouvNomImg. ".". $file_extension);
-         //unlink("images/lblkb_lnlknmn.jpg");
-         //capermet de supprimer un fichier dans un emplacement précis
-     }
-    
-     //TleSem2
-
-     $fichierCharger = $_FILES['TleSem2']['tmp_name'];
-     $sourceProperties = getimagesize($fichierCharger);
-     $nouvNomImg = $_POST["Nom"]."_".$_POST["Prenom"]."_"."TleSem2";
-     // Valid extension
-     $valid_ext = array('pdf', 'png','jpeg','jpg', 'gif');
-     $file_extension = strtolower(pathinfo($_FILES['TleSem2']['name'], PATHINFO_EXTENSION));
-     $nomComplet7 =  "image/" . htmlentities($nouvNomImg. ".". $file_extension);
-     $imageType = $sourceProperties[2];
- 
-     // Check extension
-     if (!in_array($file_extension, $valid_ext)){
-         echo "<script>alert('Format de fichier incorrect !')</script>"; 
-       }else{
-         move_uploaded_file($_FILES['TleSem2']["tmp_name"], "image/" . $nouvNomImg. ".". $file_extension);
-         //unlink("images/lblkb_lnlknmn.jpg");
-         //capermet de supprimer un fichier dans un emplacement précis
-     }
-
-     //TleSem3
-
-     $fichierCharger = $_FILES['TleSem3']['tmp_name'];
-     $sourceProperties = getimagesize($fichierCharger);
-     $nouvNomImg = $_POST["Nom"]."_".$_POST["Prenom"]."_"."TleSem3";
-     // Valid extension
-     $valid_ext = array('pdf', 'png','jpeg','jpg', 'gif');
-     $file_extension = strtolower(pathinfo($_FILES['TleSem3']['name'], PATHINFO_EXTENSION));
-     $nomComplet8 =  "image/" . htmlentities($nouvNomImg. ".". $file_extension);
-     $imageType = $sourceProperties[2];
- 
-     // Check extension
-     if (!in_array($file_extension, $valid_ext)){
-         echo "<script>alert('Format de fichier incorrect !')</script>"; 
-       }else{
-         move_uploaded_file($_FILES['TleSem3']["tmp_name"], "image/" . $nouvNomImg. ".". $file_extension);
-         //unlink("images/lblkb_lnlknmn.jpg");
-         //capermet de supprimer un fichier dans un emplacement précis
-     }
-
-     //RlveNote
-
-     $fichierCharger = $_FILES['RlveNote']['tmp_name'];
-     $sourceProperties = getimagesize($fichierCharger);
-     $nouvNomImg = $_POST["Nom"]."_".$_POST["Prenom"]."_"."RlveNote";
-     // Valid extension
-     $valid_ext = array('pdf', 'png','jpeg','jpg', 'gif');
-     $file_extension = strtolower(pathinfo($_FILES['RlveNote']['name'], PATHINFO_EXTENSION));
-     $nomComplet9 =  "image/" . htmlentities($nouvNomImg. ".". $file_extension);
-     $imageType = $sourceProperties[2];
- 
-     // Check extension
-     if (!in_array($file_extension, $valid_ext)){
-         echo "<script>alert('Format de fichier incorrect !')</script>"; 
-       }else{
-         move_uploaded_file($_FILES['RlveNote']["tmp_name"], "image/" . $nouvNomImg. ".". $file_extension);
-         //unlink("images/lblkb_lnlknmn.jpg");
-         //capermet de supprimer un fichier dans un emplacement précis
-     }
-
-     //Attestation
-
-     $fichierCharger = $_FILES['Attestation']['tmp_name'];
-     $sourceProperties = getimagesize($fichierCharger);
-     $nouvNomImg = $_POST["Nom"]."_".$_POST["Prenom"]."_"."Attestation";
-     // Valid extension
-     $valid_ext = array('pdf', 'png','jpeg','jpg', 'gif');
-     $file_extension = strtolower(pathinfo($_FILES['Attestation']['name'], PATHINFO_EXTENSION));
-     $nomComplet10 =  "image/" . htmlentities($nouvNomImg. ".". $file_extension);
-     $imageType = $sourceProperties[2];
- 
-     // Check extension
-     if (!in_array($file_extension, $valid_ext)){
-         echo "<script>alert('Format de fichier incorrect !')</script>"; 
-       }else{
-         move_uploaded_file($_FILES['Attestation']["tmp_name"], "image/" . $nouvNomImg. ".". $file_extension);
-         //unlink("images/lblkb_lnlknmn.jpg");
-         //capermet de supprimer un fichier dans un emplacement précis
-     }
-    
-     //Passport
-
-     $fichierCharger = $_FILES['Passport']['tmp_name'];
-     $sourceProperties = getimagesize($fichierCharger);
-     $nouvNomImg = $_POST["Nom"]."_".$_POST["Prenom"]."_"."Passport";
-     // Valid extension
-     $valid_ext = array('pdf', 'png','jpeg','jpg', 'gif');
-     $file_extension = strtolower(pathinfo($_FILES['Passport']['name'], PATHINFO_EXTENSION));
-     $nomComplet11 =  "image/" . htmlentities($nouvNomImg. ".". $file_extension);
-     $imageType = $sourceProperties[2];
- 
-     // Check extension
-     if (!in_array($file_extension, $valid_ext)){
-         echo "<script>alert('Format de fichier incorrect !')</script>"; 
-       }else{
-         move_uploaded_file($_FILES['Passport']["tmp_name"], "image/" . $nouvNomImg. ".". $file_extension);
-         //unlink("images/lblkb_lnlknmn.jpg");
-         //capermet de supprimer un fichier dans un emplacement précis
-     }
-    
-    
-    
-
-
-    
-        $customObj->AjouterEtudiant($_POST,$nomComplet,$nomComplet1,$nomComplet2,$nomComplet3,$nomComplet4,
-        $nomComplet5,$nomComplet6,$nomComplet7,$nomComplet8,$nomComplet9,$nomComplet10,$nomComplet11);
-        echo "<script>alert('Enregistrement réussi !')</script>"; 
-
-   
-
-*/
-
-
-?>
+<?php 
+	include 'connexion.php'; 
+	$customObj = new Controleur();
+	include 'addInfoEtu.php'; 
+?> 
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -345,8 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
 	<link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
 
     <!-- Bootstrap core CSS -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/styleInscription.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styleInscription.css" rel="stylesheet">
 
     <style>
       .bd-placeholder-img {
@@ -369,17 +43,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
 </head>
 <body>
 	<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-1" href="#">GeBCoS Services SARL</a>
-  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-  <ul class="navbar-nav px-3">
-    <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#">Deconnexion</a>
-    </li>
-  </ul>
-</nav>
+    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-1" href="#">GeBCoS Services SARL</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+    <ul class="navbar-nav px-3">
+      <li class="nav-item text-nowrap">
+        <a class="nav-link" href="#">Deconnexion</a>
+      </li>
+    </ul>
+  </nav>
 
 <div class="container-fluid">
   <div class="row">
@@ -462,46 +136,58 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
   
   <div>
       <h2>Procedure Inscription en 1ère Année</h2>
-      <form method="POST" action="" enctype="multipart/form-data">
+      <form method="POST" action="">
         <fieldset class="scheduler-border">
-            <legend class="scheduler-border" >Inscription</legend>
+          <legend class="scheduler-border" >Inscription</legend>
             <div class ="row mb-3">
-            <div class="col">
-                   <label for="nom">Entrez votre nom</label>
-                   <input type="text" class="form-control" id="Nom" name="Nom" placeholder="CHITOU" >
-                 </div>
-           
-               
-                 <div class="col">
-                   <label for="nom">Entrez votre Prenom</label>
-                   <input type="text" class="form-control " name="Prenom" id="Prenom" placeholder="Kismath" >
-                 </div>
-                 <div class="form-group">
-                   <label for="selection">Pays</label>
-                   <select id="Pays" name="Pays" class="form-control"  >
-                    <option value="France">France</option>
-                    <option value="Turquie">Turquie</option>
-                    <option value="Canada">Canada</option>
+              <div class="col">
+                <label for="nom">Entrez votre nom</label>
+                <input type="text" class="form-control" id="Nom" name="Nom" placeholder="CHITOU" >
+              </div>
+              <div class="col">
+                <label for="nom">Entrez votre Prenom</label>
+                <input type="text" class="form-control " name="Prenom" id="Prenom" placeholder="Kismath" >
+              </div>
+              <div class="form-group">
+                <label for="selection">Pays</label>
+                <select id="Pays" name="Pays" class="form-control"  >
+                  <option value="France">France</option>
+                  <option value="Turquie">Turquie</option>
+                  <option value="Canada">Canada</option>
                 </select>
-                
-                    </div>
-              
+              </div>
             </div>
-            
             <div class="row mb-3">
-                      
-                      <div class="col">
-                          <label for="Email">Email</label>
-                          <input type="Email" class="form-control " id="Email"  name="Email" placeholder="kissmachitou@gmail.com">
-                      </div>
-                      <div class="col">
-                          <label for="mdp">Mot de Passe</label>
-                          <input type="password" class="form-control" id="Mdp"  name="Mdp" >
-                      </div>
-    </fieldset>
-    <input type="submit" name="btnInscrire"  id="btnInscrire"  value="Inscrire">
-    <input type="reset" name="btnAnnuler" id="btnAnnuler" value="Annuler">
-    </form>
+              <div class="col">
+                  <label for="Email">Email</label>
+                  <input type="Email" class="form-control " id="Email"  name="Email" placeholder="kissmachitou@gmail.com">
+              </div>
+              <div class="col">
+                  <label for="mdp">Mot de Passe</label>
+                  <input type="password" class="form-control" id="Mdp"  name="Mdp" >
+              </div>
+            </div>
+        </fieldset>
+        <input type="submit" name="btnInscrire"  id="btnInscrire"  value="Inscrire">
+        <input type="reset" name="btnAnnuler" id="btnAnnuler" value="Annuler">
+      </form>
+
+      <br> <br> <br> <br> <br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <form method="POST" action="" enctype="multipart/form-data">
     <div class ="row mb-3">
             <div class="col">

@@ -2,8 +2,8 @@
  class Controleur
  {
  	private $servername = "localhost";
- 	private $username = "root";
- 	private $password = "";
+ 	private $username = "sar";
+ 	private $password = "sar";
  	private $database = "gebcoservice";
  	public $con;
 
@@ -14,14 +14,60 @@
  		$this->con = new mysqli($this->servername, $this->username, $this->password, $this->database);
  		if (mysqli_connect_error()) {
  			trigger_error("Echec de connection a MySQL: " . mysqli_connect_error());
- 		}
- 		 else{
+ 		} else {
  		 	//changer le caractère set a utf8
  		 	$this->con->set_charset("utf8");
  		 	return $this->con;
- 		 }
+ 		}
  	}
-     public function AjouterEtudiant($post,$SecSem1,$SecSem2,$SecSem3,$PreSem1,
+
+	public function ajouterPremiereInfos($infos)
+ 	{
+       $Nom =$this->con->real_escape_string($infos['Nom']);
+       $Prenom =$this->con->real_escape_string($infos['Prenom']);
+       $Pays =$this->con->real_escape_string($infos['Pays']);
+	   $Email =$this->con->real_escape_string($infos['Email']);
+	   $Mdp =$this->con->real_escape_string($infos['Mdp']);
+     
+       $requete="Insert INTO etudiantannée1 (Nom,Prenom,Pays,Email,Mdp) VALUES ('$Nom','$Prenom','$Pays','$Email','$Mdp')";
+       if($this->con->query($requete)){
+		   
+	   }
+ 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+	public function AjouterEtudiant($post,$SecSem1,$SecSem2,$SecSem3,$PreSem1,
 	 $PreSem2,$PreSem3,$TleSem1,$TleSem2,$TleSem3,$RlveNote,$Passport,$Attestation)
  	{
        
@@ -30,18 +76,7 @@
        $Pays =$this->con->real_escape_string($_POST['Pays']);
 	   $Email =$this->con->real_escape_string($_POST['Email']);
 	   $Mdp =$this->con->real_escape_string($_POST['Mdp']);
-      /* $SecSem1 = $SecSem1;
-       $SecSem2 = $SecSem2;
-       $SecSem3 = $SecSem3;
-       $PreSem1 = $PreSem1;
-       $PreSem2 = $PreSem2;
-       $PreSem3 = $PreSem3;
-       $TleSem1 = $TleSem1;
-       $TleSem2 = $TleSem2;
-       $TleSem3 = $TleSem3;
-       $RlveNote = $RlveNote;
-       $Passport = $Passport;
-       $Attestation = $Attestation;*/
+
        $requete="insert INTO etudiantannée1 (Nom,Prenom,Pays,SecSem1,SecSem2,SecSem3,
 	   PreSem1,PreSem2,PreSem3,TleSem1,TleSem2,TleSem3,RlveNote,Passport,Attestation,Email,Mdp)
         VALUES ('$Nom','$Prenom','$Pays','$SecSem1','$SecSem2','$SecSem3','$PreSem1',
@@ -49,19 +84,7 @@
 		'$Attestation','$Email',$Mdp')";
        $sql = $this->con->query($requete);
  	}
-	 public function AjouterDebut($post)
- 	{
-       
-       $Nom =$this->con->real_escape_string($_POST['Nom']);
-       $Prenom =$this->con->real_escape_string($_POST['Prenom']);
-       $Pays =$this->con->real_escape_string($_POST['Pays']);
-	   $Email =$this->con->real_escape_string($_POST['Email']);
-	   $Mdp =$this->con->real_escape_string($_POST['Mdp']);
-     
-       $requete="insert INTO etudiantannée1 (Nom,Prenom,Pays,Email,Mdp)
-        VALUES ('$Nom','$Prenom','$Pays','$Email',$Mdp')";
-       $sql = $this->con->query($requete);
- 	}
+	
 	 public function existEtudiant($CodE)
  	{
  		$requete = "select * from etudiant where Email = '$CodE'";
